@@ -16,7 +16,7 @@
 import { reactive } from "vue";
 
 const copyRight = reactive({
-  title: "vue3-md-blog v1.0.0",
+  title: "Quita風ブログサイト v1.0.0",
   icon: "©",
   date: new Date().toDateString().slice(-4),
 });
