@@ -16,9 +16,8 @@
 import { reactive } from "vue";
 
 const copyRight = reactive({
-  title: "vue3-md-blog v3.0.6",
+  title: "vue3-md-blog v1.0.0",
   icon: "©",
   date: new Date().toDateString().slice(-4),
-
 });
 </script>
