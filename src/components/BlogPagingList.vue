@@ -23,12 +23,8 @@
   <div v-if="totalCount > 0">
     <div v-if="showPaging && totalCount > 0">
       <div class="text-center">
-        <v-pagination
-          :model-value="currentPage"
-          :length="totalPages"
-          color="indigo-darken-3"
-          @update:model-value="toNumberPage"
-        ></v-pagination>
+        <v-pagination :model-value="currentPage" :length="totalPages" color="indigo-darken-3"
+          @update:model-value="toNumberPage"></v-pagination>
       </div>
     </div>
   </div>
@@ -56,22 +52,22 @@ const pageStatus = computed(() => {
   return props.pageStatus;
 });
 /** 総件数 */
-const totalCount = computed(() => {
+const totalCount = computed((): number => {
   return props.pageCounts;
 });
 /** 最初のページ */
-const currentPage = computed(() => {
+const currentPage = computed((): number => {
   return props.currentPage;
 });
 const showPaging = ref(true);
 /** 総ページ数 */
-const totalPages = () => {
+const totalPages = computed((): number => {
   if (totalCount.value % 5 == 0) {
     return totalCount.value / 5;
   } else {
     return totalCount.value / 5 + 1;
   }
-};
+});
 /**検索結果件数を表示する。前半部 */
 const firstRowsCounts = computed(() => {
   const start = (currentPage.value - 1) * 5;
