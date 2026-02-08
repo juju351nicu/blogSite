@@ -1,11 +1,7 @@
 <template>
   <!-- <PatchMeta :title="title" /> -->
   <v-container style="background-color: white">
-    <span
-      class="markdown-body"
-      :style="`background-color: 'blue' ; color: 'white';`"
-      v-html="postHtml"
-    />
+    <span class="markdown-body" :style="`background-color: 'blue' ; color: 'white';`" v-html="postHtml" />
     <v-btn @click="goHome()"> &laquo; Back </v-btn>
   </v-container>
 </template>
@@ -15,6 +11,7 @@ import { onBeforeRouteUpdate, useRouter } from "vue-router";
 import axios from "axios";
 import MarkdownIt from "markdown-it";
 import { onBeforeMount } from "vue";
+import Fetcher from "@/utils/rest";
 const router = useRouter();
 /** Propsインタフェース定義 */
 interface Props {
@@ -39,10 +36,17 @@ const postHtml = ref();
 const markDownIt = new MarkdownIt({ html: true });
 /** Htmlに表示するマークダウン情報をセットする。 */
 onBeforeMount(async () => {
-  const response = await axios.get(
-    "/blog_store/posts/" + props.section + "/" + props.id + ".md"
-  );
-  const markDownSource = response.data;
-  postHtml.value = markDownIt.render(markDownSource);
+  // const response = await axios.get(
+  //   "/blog_store/posts/" + props.section + "/" + props.id + ".md"
+  // );
+  // const markDownSource = response.data;
+  // postHtml.value = markDownIt.render(markDownSource);
+  await Fetcher.getRequest("/blog_store/posts/" + props.section + "/" + props.id + ".md")
+    .then(response => {
+      return response.text();
+    })
+    .then(body => {
+      postHtml.value = markDownIt.render(body);
+    });
 });
 </script>
